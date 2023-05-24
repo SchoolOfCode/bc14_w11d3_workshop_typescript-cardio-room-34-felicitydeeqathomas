@@ -1,36 +1,44 @@
-// Contains a HTML blockquote element (for displaying a fetched quote)
-// Contains a button element (for fetching a quote)
+// The template of data types the response data is expected to follow
+interface JokeData {
+    id: string;
+    joke: string;
+    status: number;
+}
 
-//select the quote id from the html and use document queryselector
+// Function to fetch a new joke from the API
+async function fetchQuote() {
+    const response = await fetch(`https://icanhazdadjoke.com/`, {
+      headers: { accept: "application/json" },
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
 
-let blockQuoteElement: HTMLElement | null = document.querySelector("#blockquote");
+// Function to insert the fetched joke into the HTML element with id "quote"
+function insertQuote(data: JokeData) {
+    let quoteSelector = document.querySelector('#quote');
+    if (quoteSelector) {
+        quoteSelector.textContent = data.joke;
+    }
+}
 
+// Function to handle the click event on the "Next Joke" button
+function nextQuoteClick() {
+    let nextJokeButtonSelector = document.querySelector('#next-joke-button');
+    nextJokeButtonSelector?.addEventListener("click", fetchNewQuote);
+}
 
+// Function to fetch a new joke and insert it into the HTML element
+async function fetchNewQuote() {
+    const data = await fetchQuote();
+    insertQuote(data);
+}
 
+// Function to initialize the application
+async function initializeApp() {
+    await fetchNewQuote(); // Fetch and display the initial joke
+    nextQuoteClick(); // Add event listener to the "Next Joke" button
+}
 
-async function fetchJoke() {
-    try {
-      // Send a GET request to the API
-      const response = await fetch("https://icanhazdadjoke.com", {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-  
-      // Parse the response JSON
-      
-      
-      const data = await response.json();
-
-      if (blockQuoteElement) {
-      blockQuoteElement.innerHTML = data;
-      console.log(data);
-
-      // Display the joke in the blockquote element
-      }
-    } catch (error) {
-      console.error('Error fetching joke:', error);
-    } 
-  } 
-
-fetchJoke()
+initializeApp(); // Start the application

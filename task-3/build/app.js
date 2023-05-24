@@ -1,6 +1,4 @@
 "use strict";
-// Contains a HTML blockquote element (for displaying a fetched quote)
-// Contains a button element (for fetching a quote)
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,28 +8,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-//select the quote id from the html and use document queryselector
-let blockQuoteElement = document.querySelector("#blockquote");
-function fetchJoke() {
+// Function to fetch a new joke from the API
+function fetchQuote() {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            // Send a GET request to the API
-            const response = yield fetch("https://icanhazdadjoke.com", {
-                headers: {
-                    Accept: 'application/json',
-                },
-            });
-            // Parse the response JSON
-            const data = yield response.json();
-            if (blockQuoteElement) {
-                blockQuoteElement.innerHTML = data.joke;
-                console.log(data.joke);
-                // Display the joke in the blockquote element
-            }
-        }
-        catch (error) {
-            console.error('Error fetching joke:', error);
-        }
+        const response = yield fetch(`https://icanhazdadjoke.com/`, {
+            headers: { accept: "application/json" },
+        });
+        const data = yield response.json();
+        console.log(data);
+        return data;
     });
 }
-fetchJoke();
+// Function to insert the fetched joke into the HTML element with id "quote"
+function insertQuote(data) {
+    let quoteSelector = document.querySelector('#quote');
+    if (quoteSelector) {
+        quoteSelector.textContent = data.joke;
+    }
+}
+// Function to handle the click event on the "Next Joke" button
+function nextQuoteClick() {
+    let nextJokeButtonSelector = document.querySelector('#next-joke-button');
+    nextJokeButtonSelector === null || nextJokeButtonSelector === void 0 ? void 0 : nextJokeButtonSelector.addEventListener("click", fetchNewQuote);
+}
+// Function to fetch a new joke and insert it into the HTML element
+function fetchNewQuote() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const data = yield fetchQuote();
+        insertQuote(data);
+    });
+}
+// Function to initialize the application
+function initializeApp() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield fetchNewQuote(); // Fetch and display the initial joke
+        nextQuoteClick(); // Add event listener to the "Next Joke" button
+    });
+}
+initializeApp(); // Start the application
