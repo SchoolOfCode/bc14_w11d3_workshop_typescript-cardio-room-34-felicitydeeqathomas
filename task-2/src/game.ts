@@ -50,7 +50,7 @@ export function getPlayerMove() {
 }
 
 /** Should return an outcome. Either "WIN", "LOSS" or "DRAW" */
-export function getOutcomeForRound(playerChoice, computerChoice) {
+export function getOutcomeForRound(playerChoice: string, computerChoice: string) {
   const playerHasDrawn = playerChoice === computerChoice;
 
   if (playerHasDrawn) {
@@ -106,7 +106,7 @@ export function playGame() {
   }
 }
 
-export function updateModel(model, dataForRound) {
+export function updateModel(model: any, dataForRound: any) {
   switch (dataForRound.outcome) {
     case OUTCOME_WIN:
       return { ...model, playerScore: model.playerScore + 1 };
