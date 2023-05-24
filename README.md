@@ -2,7 +2,7 @@
 
 The aim here is to become more familiar with TypeScript, not to finish all the tasks.
 
-## Task 1
+## Task 1 ✅
 
 Navigate to the [TypeScript Playground](https://www.typescriptlang.org/play) and have a go at the following things:
 
