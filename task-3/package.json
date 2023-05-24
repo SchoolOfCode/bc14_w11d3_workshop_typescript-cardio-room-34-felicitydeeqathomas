@@ -1,7 +1,11 @@
 {
   "private": true,
   "version": "0.0.0",
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {}
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "build" : "tsc",
+    "dev": "tsc -w"
+  }
 }
