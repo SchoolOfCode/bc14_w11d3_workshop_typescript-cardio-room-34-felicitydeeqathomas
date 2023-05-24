@@ -35,7 +35,7 @@ export function getPlayerMove(): string | null {
       return null;
     }
 
-    switch (rawInput.toLowerCase()) {
+    switch (rawInput?.toLowerCase()) {
       case "r":
       case "rock":
         return CHOICE_ROCK;
