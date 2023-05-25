@@ -1,5 +1,5 @@
 // The template of data types the response data is expected to follow
-interface JokeData {
+type JokeData = {
     id: string;
     joke: string;
     status: number;
